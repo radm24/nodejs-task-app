@@ -28,7 +28,6 @@ router.post('/users', async (req, res) => {
 
 router.post('/users/login', async (req, res) => {
     try {
-        console.log(req.body);
         const user = await User.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
         res.send({ user, token });
@@ -100,7 +99,7 @@ const upload = multer({
     }
 });
 
-router.post('/users/me/avatar', auth, upload.single('avatars'), async (req, res) => {
+router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize(250, 250).png().toBuffer();
     req.user.avatar = buffer;
     await req.user.save();

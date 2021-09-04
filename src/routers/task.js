@@ -32,7 +32,6 @@ router.get('/tasks', auth, async (req, res) => {
     }
 
     try {
-        //const tasks = await Task.find({ owner: req.user._id });
         await req.user.execPopulate({
             path: 'tasks',
             match,
